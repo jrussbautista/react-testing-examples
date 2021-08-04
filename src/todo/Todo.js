@@ -30,6 +30,13 @@ const Todo = () => {
     };
   }, []);
 
+  const removeTodoItem = (todoItemToRemove) => {
+    const newTodos = todos.filter(
+      (todoItem) => todoItem.id !== todoItemToRemove.id
+    );
+    setTodos(newTodos);
+  };
+
   return (
     <div>
       <AddTodoForm />
@@ -37,7 +44,7 @@ const Todo = () => {
 
       {error && <div role='alert'>Failed to display todos</div>}
 
-      <TodoList todos={todos} />
+      <TodoList todos={todos} onRemoveTodoItem={removeTodoItem} />
     </div>
   );
 };

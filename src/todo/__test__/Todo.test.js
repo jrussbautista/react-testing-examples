@@ -5,6 +5,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { rest } from 'msw';
+import userEvent from '@testing-library/user-event';
 import { setupServer } from 'msw/node';
 import Todo from '../Todo';
 import mockData from '../mockData';
@@ -20,7 +21,7 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe('Todo', () => {
-  it('Display loading text while api request is in progress and remove loading text after api request is done', async () => {
+  it('Display loading text while fetching todos', async () => {
     render(<Todo />);
     const loadingElement = screen.getByText('Loading');
 
@@ -29,7 +30,7 @@ describe('Todo', () => {
     await waitForElementToBeRemoved(() => screen.getByText('Loading'));
   });
 
-  it('Display list of todos from an API', async () => {
+  it('Successfully loads and display list of todos', async () => {
     render(<Todo />);
 
     await waitFor(() => screen.getAllByRole('listitem'));
@@ -39,7 +40,7 @@ describe('Todo', () => {
     expect(todoListItems).toHaveLength(mockData.length);
   });
 
-  it('Display error message when api request is failed', async () => {
+  it('Display error message when there is an problem getting todos', async () => {
     server.use(
       rest.get('/api/todos', (req, res, ctx) => {
         return res(ctx.status(500));
@@ -55,5 +56,19 @@ describe('Todo', () => {
     );
 
     expect(screen.queryByText('Loading')).not.toBeInTheDocument();
+  });
+
+  it('successfully removed todo item from list', async () => {
+    render(<Todo />);
+    await waitFor(() => screen.getAllByRole('listitem'));
+
+    const deleteButtons = screen.getAllByRole('button', { name: /delete/i });
+    const listItems = screen.getAllByRole('listitem');
+
+    userEvent.click(deleteButtons[0]);
+
+    expect(listItems[0]).not.toBeInTheDocument();
+
+    expect(screen.getAllByRole('listitem')).toHaveLength(mockData.length - 1);
   });
 });
