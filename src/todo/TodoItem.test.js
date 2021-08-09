@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import TodoItem from '../TodoItem';
+import TodoItem from './TodoItem';
 
 describe('TodoItem', () => {
   it('renders todo information', () => {

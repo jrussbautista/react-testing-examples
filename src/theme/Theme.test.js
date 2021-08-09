@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { ThemeProvider } from '../../context/ThemeContext';
-import Theme from '../Theme';
+import { ThemeProvider } from '../context/ThemeContext';
+import Theme from './Theme';
 
 test('renders with light styles for the light theme', () => {
   const Wrapper = ({ children }) => {

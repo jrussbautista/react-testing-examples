@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import faker from 'faker';
-import LoginForm from '../LoginForm';
+import LoginForm from './LoginForm';
 
 const buildLoginForm = (overrides) => {
   return {

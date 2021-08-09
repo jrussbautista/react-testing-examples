@@ -7,8 +7,8 @@ import {
 import { rest } from 'msw';
 import userEvent from '@testing-library/user-event';
 import { setupServer } from 'msw/node';
-import Todo from '../Todo';
-import mockData from '../mockData';
+import Todo from './Todo';
+import mockData from './mockData';
 
 const server = setupServer(
   rest.get('/api/todos', (req, res, ctx) => {

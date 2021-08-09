@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import fireEvent from '@testing-library/user-event';
-import Counter from '../Counter';
+import Counter from './Counter';
 
 describe('Counter', () => {
   test('Display correct initial count', () => {
